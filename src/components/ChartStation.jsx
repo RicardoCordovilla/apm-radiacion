@@ -19,6 +19,21 @@ import { useOrientation } from 'react-use';
 
 const ChartStation = () => {
 
+
+    function showDesktopNotification() {
+
+        const myNotification = new Notification("Nueva notificacion", {
+            icon: 'vite.svg',
+            body: "Esta es una nueva notificacion",
+        });
+
+        // myNotification.onclick = (e) => {
+        //     alert('Notification  clicked')
+        // }
+    }
+
+
+
     const { angle } = useOrientation();
 
     const cont = signal(0)
@@ -164,6 +179,20 @@ const ChartStation = () => {
 
     useEffect(() => {
         getStation()
+
+        // console.log("1. ", Notification.permission); // Notification.permission => :default", "granted" and "denied"
+        // if (Notification.permission === "granted") {
+        //     console.log('first')
+        // } else if (Notification.permission !== "denied") {
+        //     Notification.requestPermission()
+        //         .then(permission => {
+        //             if (permission === "granted") {
+        //                 console.log('fadsf')
+        //                 // showDesktopNotification();
+        //             }
+        //         })
+        // }
+
     }, [])
 
     // useEffect(() => {
@@ -265,7 +294,7 @@ const ChartStation = () => {
 
                     <h1 className='chartTitle'>{stationInfo?.alias}</h1>
                     {/* <h1 className='chartTitle'>{angle}</h1> */}
-
+                    <button onClick={() => showDesktopNotification()}>nofificaion</button>
 
                     <div className="navbar_header_right"
                     // onMouseLeave={() => setHideNotifications(false)}
