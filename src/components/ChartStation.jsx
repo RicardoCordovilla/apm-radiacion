@@ -15,26 +15,38 @@ import { BsFillGearFill } from 'react-icons/bs'
 import { FaCircleRadiation } from 'react-icons/fa6'
 import NotificationsHeader from './NotificationsHeader'
 import { useOrientation } from 'react-use';
+import Notifier from "react-desktop-notifications"
 
 
 const ChartStation = () => {
 
+    function notifyMe() {
+        if (!("Notification" in window)) {
+            // Check if the browser supports notifications
+            alert("This browser does not support desktop notification");
+        } else if (Notification.permission === "granted") {
+            // Check whether notification permissions have already been granted;
+            // if so, create a notification
+            const notification = new Notification("Hi there!");
+            // …
+        } else if (Notification.permission !== "denied") {
+            // We need to ask the user for permission
+            Notification.requestPermission().then((permission) => {
+                // If the user accepts, let's create a notification
+                if (permission === "granted") {
+                    const notification = new Notification("Hi there!");
+                    // …
+                }
+            });
+        }
 
-    // function showDesktopNotification() {
-
-    //     const myNotification = new Notification("Nueva notificacion", {
-    //         icon: 'vite.svg',
-    //         body: "Esta es una nueva notificacion",
-    //     });
-
-    //     // myNotification.onclick = (e) => {
-    //     //     alert('Notification  clicked')
-    //     // }
-    // }
+        // At last, if the user has denied notifications, and you
+        // want to be respectful there is no need to bother them anymore.
+    }
 
 
 
-    const { angle } = useOrientation();
+    const { angle, type } = useOrientation();
 
     const cont = signal(0)
 
@@ -179,8 +191,8 @@ const ChartStation = () => {
 
     useEffect(() => {
         getStation()
-
-        // console.log("1. ", Notification.permission); // Notification.permission => :default", "granted" and "denied"
+        notifyMe()
+        // console.log("1. ", Notification.permission); 
         // if (Notification.permission === "granted") {
         //     console.log('first')
         // } else if (Notification.permission !== "denied") {
@@ -292,9 +304,8 @@ const ChartStation = () => {
                     }
 
 
-                    <h1 className='chartTitle'>{stationInfo?.alias}</h1>
-                    {/* <h1 className='chartTitle'>{angle}</h1> */}
-                    <button onClick={() => showDesktopNotification()}>nofificaion</button>
+                    {/* <h1 className='chartTitle'>{stationInfo?.alias}</h1> */}
+                    <h1 className='chartTitle'>{angle}</h1>
 
                     <div className="navbar_header_right"
                     // onMouseLeave={() => setHideNotifications(false)}
@@ -390,7 +401,7 @@ const ChartStation = () => {
                         <span className='y_axisLabel'>cps</span>
 
                         <LineChart
-                            width={angle === 90 ? 700 : 300}
+                            width={angle === 0 ? 300 : 700}
                             height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }} >
                             <Line type="monotone" dataKey="data1"
                                 stroke={config.styles.linecolor}
@@ -413,7 +424,7 @@ const ChartStation = () => {
                         <h3>Tasa de dosis (µSv/h): </h3>
                         <span className='y_axisLabel'>µSv/h</span>
                         <LineChart
-                            width={angle === 90 ? 700 : 300}
+                            width={angle === 0 ? 300 : 700}
                             height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
                             <Line type="monotone" dataKey="data2"
                                 stroke={config.styles.linecolor}
@@ -436,7 +447,7 @@ const ChartStation = () => {
                         <h3>Tasa de dosis (µSv/d): </h3>
                         <span className='y_axisLabel'>µSv/d</span>
                         <LineChart
-                            width={angle === 90 ? 700 : 300}
+                            width={angle === 0 ? 300 : 700}
                             height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
                             <Line type="monotone" dataKey="data3"
                                 stroke={config.styles.linecolor}
