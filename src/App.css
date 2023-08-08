@@ -1,0 +1,650 @@
+#root {
+  /* max-width: 1280px; */
+  width: 100%;
+  margin: 0 0;
+  padding: 0;
+
+  --fondo: #242424;
+  --fondoDatos: #27259c;
+  --texto: #dfdfdf;
+  --colorLinea: #ddd;
+  --chartbackcolor: #1c1a92;
+  --fondoHover: rgb(15, 114, 92);
+  color: #edf;
+  /* --headerBackGroundColor: */
+}
+
+@font-face {
+  font-family: Digital;
+  font-style: normal;
+  font-weight: 400;
+  src:
+    local("Open Sans"),
+    /* url('./fonts/digital1/DS-DIGIB.ttf')format('truetype'); */
+    /* url('./fonts/digital1/DS-DIGI.ttf') format('truetype'); */
+    url('./fonts/digital1/DS-DIGII.TTF')format('truetype');
+    /* url('./fonts/digital1/DS-DIGIT.TTF')format('truetype'); */
+
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.logoContainer {
+  width: 200px;
+  height: 200px;
+  /* background-color: #d3d0d0; */
+  margin: auto;
+  padding: 0.5rem;
+  margin-top: 1rem;
+}
+
+.logo {
+  width: 100%;
+}
+
+
+.inputField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  color: #858585;
+  font-size: 1.2rem;
+  padding: 0.5rem 0;
+}
+
+.loginField {
+  color: #222222;
+  background-color: #fff;
+  font-size: 1.5rem;
+  padding: 0.4rem 0.8rem;
+  border: 2px solid transparent;
+  border-radius: 4px;
+}
+
+
+.submit {
+  border: 2px solid transparent;
+  background-color: #20810c;
+  color: #d3d0d0;
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  width: 100%;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+}
+
+.submit:hover {
+  background-color: #1d508a;
+  transition: all 0.3s ease;
+}
+
+
+
+.cardsContainer {
+  padding: 2rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 2rem;
+  color: var(--texto);
+}
+
+.stationCard {
+  background-color: var(--fondoDatos);
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: background-color 1s ease;
+}
+
+.stationCard:hover {
+  background-color: var(--fondoHover);
+  transition: background-color 0.3s ease;
+}
+
+/* .cardsContainer:hover .stationCard:not(:hover) {
+  opacity: 0.5;
+  transition: opacity 0.4s ease;
+} */
+
+
+
+.stationCard_header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  border-bottom: 1px solid #bbb;
+  /* background-color: #1d508a; */
+  /* padding-bottom: 0.5rem; */
+  padding-inline: 1rem;
+  margin-bottom: 1rem;
+}
+
+.stationCard_header>div:not(:last-child) {
+  border-right: 1px solid #bbb;
+  padding-right: 1rem;
+}
+
+.stationCard_header_line {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.stationCard_header_line_infoLabel {
+  font-size: 1.5rem;
+  /* background-color: #1d508a; */
+  color: #dfdfdf;
+  text-align: left;
+  font-size: 1.5rem;
+}
+
+.stationCard_header_line_infoText {
+  font-size: 1.6rem;
+}
+
+
+.bodyStationCard {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.bodyStationCardLine {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.bodyStationCard_label {
+  opacity: 0.8;
+  text-align: right;
+  width: 30%;
+}
+
+
+
+/* ------charts page -------- */
+
+
+.chartStationPage {
+  width: 100%;
+  /* background-color: #1d508a; */
+}
+
+
+.chartStationBody {
+  width: 100%;
+  /* padding: 0 rem; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.navBarContainer {
+  display: flex;
+  flex-direction: column;
+  /* gap: 0.5rem; */
+  background-color: #555555;
+  width: 100%;
+  padding: 0 8rem;
+}
+
+.navBarContainer_header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1em;
+  padding: 1rem;
+  padding-bottom: 0;
+}
+
+.navbar_header_right {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 2rem;
+}
+
+.navbar_header_notificationBx {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+}
+
+.navbar_header_notificationBx_numberContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 1.3rem;
+  width: 1.3rem;
+  padding: 2px;
+  border-radius: 100%;
+  background: rgba(245, 52, 4, 0.9);
+  border: 1px solid #bbb;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notificationsHeaderContainer {
+  position: absolute;
+  width: 20rem;
+  left: -9rem;
+  background-color: #343434;
+  padding: 0.5rem;
+  border-radius: 8px;
+  height: fit-content;
+  align-items: center;
+  text-align: center;
+}
+
+.notificationsContainer {
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 0;
+}
+
+
+.notificationBx {
+  cursor: pointer;
+  border: 1px solid transparent;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  /* padding-inline: 0.5rem; */
+}
+
+.notificationTitle:hover {
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  padding: 0.5rem 0;
+}
+
+.notificationTitle {
+  padding: 0.5rem 0;
+  border: 1px solid transparent;
+}
+
+.notificationInfo {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  text-align: justify;
+  padding: 0.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--fondoDatos);
+  border-radius: 8px;
+  box-shadow: 0 0 5px 2px #1d508a;
+}
+
+
+.navBarContainer_body {
+  display: flex;
+  flex-direction: row;
+  gap: 4rem;
+  width: 100%;
+  /* background-color: #1d508a; */
+  justify-content: center;
+  opacity: 0.6;
+  /* padding-bottom: ; */
+}
+
+.navButton {
+  background: none;
+  border: 4px solid transparent;
+  cursor: pointer;
+  font-size: 1.4rem;
+  padding: 4px 2px;
+  color: #aaa;
+  display: flex;
+  flex-direction: row;
+  /* align-items: center; */
+  gap: 0.2rem;
+  transition: all 0.3s ease;
+}
+
+.navButton:hover {
+  color: #fff;
+  border-bottom: 4px solid #858585;
+  transition: all 0.3s ease;
+}
+
+.dateContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 2rem;
+  color: #858585;
+  font-size: 1rem;
+
+}
+
+.dateField {
+  display: flex;
+  flex-direction: row;
+  gap: 0.3rem;
+  align-items: center;
+}
+
+.dateContainer input {
+  background-color: #A5A5A5;
+  border: 1px solid #858585;
+  font-size: 1.2rem;
+  padding: 0.2rem 0.4rem;
+}
+
+.chartTitle {
+  color: #ffff;
+  width: 100%;
+  /* background-color: #1d508a; */
+  text-align: center;
+  padding: 1rem;
+
+}
+
+
+
+.indicatorsContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2rem;
+}
+
+
+.indicatorCard {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: var(--chartbackcolor);
+  padding: 0.8rem 1.5rem;
+  margin: 1rem 0;
+  width: 100%;
+  max-width: 300px;
+  border-radius: 8px;
+}
+
+.indicatorCard_body {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.indicatorCard_body_numbers {
+  font-family: 'Digital';
+  color: #d3d0d0;
+  font-size: 5rem;
+  align-self: center;
+  /* background-color: #1d508a; */
+  line-height: 4rem;
+}
+
+.sideIcon {
+  display: flex;
+  place-items: center;
+  font-size: 2.5rem;
+  color: var(--texto);
+  width: 20%;
+}
+
+.sideNumber {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  /* background-color: #1d508a; */
+  width: 100%;
+}
+
+.sideUp {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  /* background-color: #1d508a; */
+  align-items: center;
+  /* font-size: 1rem; */
+  gap: 0.4rem;
+}
+
+.sideUp_number {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.numberIndicatorCard {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.indicatorCard_footer {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+}
+
+.indicatorCard_footer_labels {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  padding-inline: 1rem;
+  margin-top: -1rem;
+  color: #888;
+}
+
+.indicatorProgressBar {
+  width: 95%;
+  align-self: center;
+}
+
+
+
+/* charts */
+
+.chartsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.chartContainer {
+  position: relative;
+  background-color: var(--chartbackcolor);
+  border: 1px solid #343434;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  box-shadow: 5px 5px 8px 1px #706d6dc4;
+}
+
+
+
+.y_axisLabel {
+  position: absolute;
+  top: 50%;
+  left: 0.5rem;
+  transform: rotate(-90deg);
+}
+
+.x_axisLabel {
+  text-align: center;
+  margin-top: -0.8rem;
+}
+
+
+
+/* --------- SIDE NAV BAR -------------*/
+
+.sidenavbar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem;
+  padding-top: 2rem;
+  background-color: #1d508a;
+  height: 100%;
+  width: fit-content;
+  z-index: 3;
+}
+
+.sideBar_iconBox {
+  padding: 1rem;
+  border: 2px solid transparent;
+  border-radius: 16px;
+}
+
+.sidenavbar>div {
+  cursor: pointer;
+}
+
+.sidenavbar>div:hover {
+  background-color: var(--fondoHover);
+}
+
+.sidenavbar_devicesContainer {
+  display: flex;
+  flex-direction: column;
+  /* width: 100px; */
+  padding: 0.8rem 1.5rem;
+  /* background-color: #20810c; */
+  gap: 1rem;
+}
+
+.sidenavbar_devicesContainer_header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 0.7rem;
+  align-items: center;
+  /* background-color: #222222; */
+  width: 100%;
+  font-size: 1.5rem;
+  /* transition: width 0.5s ease; */
+}
+
+.sidenavbar_devicesContainer_deviceBox {
+  display: flex;
+  flex-direction: row;
+  padding: 0.5rem;
+  margin-left: 1rem;
+  gap: 0.5rem;
+  align-items: center;
+  cursor: pointer;
+  /* background-color: #20810c; */
+  border: 2px solid transparent;
+  transition: border 0.4s ease;
+}
+
+.sidenavbar_devicesContainer_deviceBox:hover {
+
+  border-bottom: 2px solid #bbb;
+  transition: border 0.2s ease;
+}
+
+
+
+/* ======= CONFIGS PAGE ==========*/
+
+.configsPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.congig_devicesContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.deviceConfigBx {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border: 2px solid #bbb;
+  border-radius: 8px;
+  width: 300px;
+  height: fit-content;
+  align-items: center;
+}
+
+
+.fieldsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.fieldRow {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+}
+
+.fieldLabel {
+  color: #888;
+  line-height: 1.1rem;
+}
+
+.fieldInput {
+  font-size: 1.2rem;
+  padding: 0.2rem 0.4rem;
+  width: 100%;
+}
+
+.btnSave {
+  border: 1px solid transparent;
+  background-color: #20810c;
+  padding: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--colorLinea);
+  border-radius: 0.5rem;
+}
