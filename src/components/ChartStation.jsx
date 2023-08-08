@@ -12,7 +12,7 @@ import SideNavBar from './SideNavBar'
 import useMqtt from '../hooks/useMqtt'
 import { signal } from '@preact/signals-react'
 import { BsFillGearFill } from 'react-icons/bs'
-import { MdNotificationsActive } from 'react-icons/md'
+import { FaCircleRadiation } from 'react-icons/fa6'
 import NotificationsHeader from './NotificationsHeader'
 
 
@@ -21,7 +21,8 @@ const ChartStation = () => {
 
     const cont = signal(0)
 
-    const { station } = useParams()
+    // const { station } = useParams()
+    const station = 'RAD1'
     console.log(station)
     const navigate = useNavigate()
 
@@ -227,8 +228,6 @@ const ChartStation = () => {
                 disabled={download && fetching}
             >Actualizar</button> */}
 
-                    <h1 className='chartTitle'>{stationInfo?.alias}</h1>
-
 
                     {!allRegisters.length > 0 &&
                         <button
@@ -258,6 +257,9 @@ const ChartStation = () => {
                     }
 
 
+                    <h1 className='chartTitle'>{stationInfo?.alias}</h1>
+
+
                     <div className="navbar_header_right"
                     // onMouseLeave={() => setHideNotifications(false)}
                     >
@@ -267,7 +269,7 @@ const ChartStation = () => {
                                     <span>{alert}</span>
                                 </div>
                             }
-                            <MdNotificationsActive fontSize={'3.5rem'}
+                            <FaCircleRadiation fontSize={'3.5rem'}
                                 onClick={() => setHideNotifications(!hideNotifications)}
                             />
                             {hideNotifications && <NotificationsHeader alertMessage={alertMessage[alert]} setAlert={setAlert} />}

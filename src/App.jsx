@@ -17,9 +17,9 @@ function App() {
     <div className='App'>
 
       <Routes>
-        <Route path='/' element={<Home user={user} />} />
+        <Route path='/' element={<ChartStation />} />
         <Route path='/:station' element={<ChartStation />} />
-        <Route path='/config' element={<ConfigsPage />} />
+        {/* <Route path='/config' element={<ConfigsPage />} /> */}
       </Routes>
 
     </div>
