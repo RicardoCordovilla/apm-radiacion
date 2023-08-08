@@ -20,17 +20,17 @@ import { useOrientation } from 'react-use';
 const ChartStation = () => {
 
 
-    function showDesktopNotification() {
+    // function showDesktopNotification() {
 
-        const myNotification = new Notification("Nueva notificacion", {
-            icon: 'vite.svg',
-            body: "Esta es una nueva notificacion",
-        });
+    //     const myNotification = new Notification("Nueva notificacion", {
+    //         icon: 'vite.svg',
+    //         body: "Esta es una nueva notificacion",
+    //     });
 
-        // myNotification.onclick = (e) => {
-        //     alert('Notification  clicked')
-        // }
-    }
+    //     // myNotification.onclick = (e) => {
+    //     //     alert('Notification  clicked')
+    //     // }
+    // }
 
 
 
@@ -180,18 +180,18 @@ const ChartStation = () => {
     useEffect(() => {
         getStation()
 
-        console.log("1. ", Notification.permission); // Notification.permission => :default", "granted" and "denied"
-        if (Notification.permission === "granted") {
-            console.log('first')
-        } else if (Notification.permission !== "denied") {
-            Notification.requestPermission()
-                .then(permission => {
-                    if (permission === "granted") {
-                        console.log('fadsf')
-                        // showDesktopNotification();
-                    }
-                })
-        }
+        // console.log("1. ", Notification.permission); // Notification.permission => :default", "granted" and "denied"
+        // if (Notification.permission === "granted") {
+        //     console.log('first')
+        // } else if (Notification.permission !== "denied") {
+        //     Notification.requestPermission()
+        //         .then(permission => {
+        //             if (permission === "granted") {
+        //                 console.log('fadsf')
+        //                 // showDesktopNotification();
+        //             }
+        //         })
+        // }
 
     }, [])
 
