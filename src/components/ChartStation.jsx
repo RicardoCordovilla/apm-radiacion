@@ -180,18 +180,18 @@ const ChartStation = () => {
     useEffect(() => {
         getStation()
 
-        // console.log("1. ", Notification.permission); // Notification.permission => :default", "granted" and "denied"
-        // if (Notification.permission === "granted") {
-        //     console.log('first')
-        // } else if (Notification.permission !== "denied") {
-        //     Notification.requestPermission()
-        //         .then(permission => {
-        //             if (permission === "granted") {
-        //                 console.log('fadsf')
-        //                 // showDesktopNotification();
-        //             }
-        //         })
-        // }
+        console.log("1. ", Notification.permission); // Notification.permission => :default", "granted" and "denied"
+        if (Notification.permission === "granted") {
+            console.log('first')
+        } else if (Notification.permission !== "denied") {
+            Notification.requestPermission()
+                .then(permission => {
+                    if (permission === "granted") {
+                        console.log('fadsf')
+                        // showDesktopNotification();
+                    }
+                })
+        }
 
     }, [])
 
