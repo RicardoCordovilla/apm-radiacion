@@ -3,14 +3,15 @@ import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import Home from './components/Home'
 import ChartStation from './components/ChartStation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ConfigsPage from './pages/ConfigsPage'
+import { useOrientation } from 'react-use';
 
 
 function App() {
 
-  const [user, setUser] = useState(null)
 
+  const [user, setUser] = useState(null)
 
   return (
 

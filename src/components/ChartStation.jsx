@@ -14,10 +14,12 @@ import { signal } from '@preact/signals-react'
 import { BsFillGearFill } from 'react-icons/bs'
 import { FaCircleRadiation } from 'react-icons/fa6'
 import NotificationsHeader from './NotificationsHeader'
-
+import { useOrientation } from 'react-use';
 
 
 const ChartStation = () => {
+
+    const { angle } = useOrientation();
 
     const cont = signal(0)
 
@@ -164,6 +166,10 @@ const ChartStation = () => {
         getStation()
     }, [])
 
+    // useEffect(() => {
+    //     console.log(type)
+    // })
+
 
     useEffect(() => {
         getRegistersRange(from, to)
@@ -258,6 +264,7 @@ const ChartStation = () => {
 
 
                     <h1 className='chartTitle'>{stationInfo?.alias}</h1>
+                    {/* <h1 className='chartTitle'>{angle}</h1> */}
 
 
                     <div className="navbar_header_right"
@@ -353,7 +360,9 @@ const ChartStation = () => {
                         <h3>Conteo por segundo (cps):</h3>
                         <span className='y_axisLabel'>cps</span>
 
-                        <LineChart width={800} height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }} >
+                        <LineChart
+                            width={angle === 90 ? 700 : 300}
+                            height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }} >
                             <Line type="monotone" dataKey="data1"
                                 stroke={config.styles.linecolor}
                                 strokeWidth={config.styles.linewidth}
@@ -374,7 +383,9 @@ const ChartStation = () => {
                     <div className="chartContainer">
                         <h3>Tasa de dosis (µSv/h): </h3>
                         <span className='y_axisLabel'>µSv/h</span>
-                        <LineChart width={800} height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                        <LineChart
+                            width={angle === 90 ? 700 : 300}
+                            height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
                             <Line type="monotone" dataKey="data2"
                                 stroke={config.styles.linecolor}
                                 strokeWidth={config.styles.linewidth}
@@ -395,7 +406,9 @@ const ChartStation = () => {
                     <div className="chartContainer">
                         <h3>Tasa de dosis (µSv/d): </h3>
                         <span className='y_axisLabel'>µSv/d</span>
-                        <LineChart width={800} height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                        <LineChart
+                            width={angle === 90 ? 700 : 300}
+                            height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
                             <Line type="monotone" dataKey="data3"
                                 stroke={config.styles.linecolor}
                                 strokeWidth={config.styles.linewidth}
@@ -410,8 +423,9 @@ const ChartStation = () => {
                             />
                         </LineChart>
                         <div className='x_axisLabel'>Hora</div>
-
                     </div>
+
+
                 </div>
             </div>
 
