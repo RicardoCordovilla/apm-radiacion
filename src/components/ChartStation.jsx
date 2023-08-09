@@ -20,32 +20,6 @@ import Notifier from "react-desktop-notifications"
 
 const ChartStation = () => {
 
-    function notifyMe() {
-        if (!("Notification" in window)) {
-            // Check if the browser supports notifications
-            alert("This browser does not support desktop notification");
-        } else if (Notification.permission === "granted") {
-            // Check whether notification permissions have already been granted;
-            // if so, create a notification
-            const notification = new Notification("Hi there!");
-            // …
-        } else if (Notification.permission !== "denied") {
-            // We need to ask the user for permission
-            Notification.requestPermission().then((permission) => {
-                // If the user accepts, let's create a notification
-                if (permission === "granted") {
-                    const notification = new Notification("Hi there!");
-                    // …
-                }
-            });
-        }
-
-        // At last, if the user has denied notifications, and you
-        // want to be respectful there is no need to bother them anymore.
-    }
-
-
-
     const { angle, type } = useOrientation();
 
     const cont = signal(0)
@@ -97,13 +71,20 @@ const ChartStation = () => {
     const [hideNotifications, setHideNotifications] = useState(false)
 
     const [alert, setAlert] = useState(0)
-    const alertMessage = [
-        null,
-        'Alerta 1',
-        'Alerta 2',
-        'Alerta 3',
-        'Alerta 4',
-    ]
+
+    const getAlerts = (date) => {
+        let url = config.db.baseurl + 'registers/' + station + '/date/alerts?'
+            + 'from=' + date
+            + '&to=' + date
+        console.log(url)
+        axios.get(url)
+            .then(response => {
+                console.log(response.data)
+                setNotificationList(response.data)
+                setAlert(response.data.length)
+            })
+            .catch(err => console.log(err))
+    }
 
     const getLastInfo = () => {
         let url = config.db.baseurl + 'registers/' + station + '/last'
@@ -191,20 +172,16 @@ const ChartStation = () => {
 
     useEffect(() => {
         getStation()
-        notifyMe()
-        // console.log("1. ", Notification.permission); 
-        // if (Notification.permission === "granted") {
-        //     console.log('first')
-        // } else if (Notification.permission !== "denied") {
-        //     Notification.requestPermission()
-        //         .then(permission => {
-        //             if (permission === "granted") {
-        //                 console.log('fadsf')
-        //                 // showDesktopNotification();
-        //             }
-        //         })
-        // }
-
+        getAlerts(formatDate(new Date()))
+        document.addEventListener('visibilitychange', (e) => {
+            console.log(document.visibilityState)
+            if (document.visibilityState === 'visible') {
+                getLastInfo()
+                // window.alert('Bienvenido')
+                getRegistersRange(from, to)
+                getAlerts(formatDate(new Date()))
+            }
+        })
     }, [])
 
     // useEffect(() => {
@@ -214,6 +191,7 @@ const ChartStation = () => {
 
     useEffect(() => {
         getRegistersRange(from, to)
+        getAlerts(formatDate(new Date()))
         getLastInfo()
     }, [payload])
 
@@ -234,28 +212,33 @@ const ChartStation = () => {
 
     useEffect(() => {
         if (isConnected) {
-            // mqttSubscribe(config.db.mqtt);
+            mqttSubscribe(config.db.mqtt);
             mqttSubscribe(config.db.mqttalert);
         }
     }, [isConnected]);
 
     useEffect(() => {
         if (payload.message
-            && [config.db.mqttalert].includes(payload.topic)
+            // && [config.db.mqtt].includes(payload.topic)
         ) {
-            const newMessage = JSON.parse(payload.message);
+            console.log(payload.topic)
+            // const newMessage = JSON.parse(payload.message);
             // const newMessage = payload.message;
-            console.log(newMessage, stationInfo)
-            if (newMessage?.station === stationInfo?.title) {
-                setAlert(newMessage.alert)
+            // console.log(newMessage, stationInfo)
+            if (payload.topic.split('/')[1] === 'all') {
+                getAlerts(formatDate(new Date()))
+                getRegistersRange(from, to)
             }
+            if (payload.topic.split('/')[1] === 'alerts')
+                getLastInfo()
         }
     }, [payload]);
 
 
     return (
         <div className='chartStationPage'
-        // onClick={() => setHideNotifications(false)}
+            // onClick={() => setHideNotifications(false)}
+            onFocus={() => console.log('dasd')}
         >
 
             {/* <SideNavBar /> */}
@@ -304,22 +287,21 @@ const ChartStation = () => {
                     }
 
 
-                    {/* <h1 className='chartTitle'>{stationInfo?.alias}</h1> */}
-                    <h1 className='chartTitle'>{angle}</h1>
+                    <h1 className='chartTitle'>{stationInfo?.alias}</h1>
 
                     <div className="navbar_header_right"
                     // onMouseLeave={() => setHideNotifications(false)}
                     >
                         <div className="navbar_header_notificationBx">
-                            {alert > 0 &&
+                            {notificationList.length > 0 &&
                                 <div className='navbar_header_notificationBx_numberContainer'>
-                                    <span>{alert}</span>
+                                    <span>{notificationList.length}</span>
                                 </div>
                             }
                             <FaCircleRadiation fontSize={'3.5rem'}
                                 onClick={() => setHideNotifications(!hideNotifications)}
                             />
-                            {hideNotifications && <NotificationsHeader alertMessage={alertMessage[alert]} setAlert={setAlert} />}
+                            {hideNotifications && <NotificationsHeader notificationList={notificationList} setAlert={setAlert} />}
                         </div>
                     </div>
 

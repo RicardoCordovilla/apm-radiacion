@@ -1,9 +1,19 @@
 import React, { useState } from 'react'
+import { BiTrash } from 'react-icons/bi'
 
-const NotificationsHeader = ({ alertMessage, setAlert }) => {
-    console.log(alertMessage)
+const NotificationsHeader = ({ notificationList, setAlert }) => {
+    console.log(notificationList)
 
     const [hideInfo, setHideInfo] = useState(true)
+
+    const alertMessage = [
+        null,
+        'Alerta 1',
+        'Alerta 2',
+        'Alerta 3',
+        'Alerta 4',
+    ]
+
 
     return (
         <div className='notificationsHeaderContainer'>
@@ -13,13 +23,21 @@ const NotificationsHeader = ({ alertMessage, setAlert }) => {
                 <div className="notificationBx"
                     onClick={() => setHideInfo(!hideInfo)}
                 >
-                    {alertMessage && <span className='notificationTitle'>{alertMessage}</span>}
                     {
+                        notificationList.map((notif, index) => (
+                            <span key={index} className='notificationTitle'>
+                                {alertMessage[notif?.values?.alert]} | {notif?.time}
+                                {/* <BiTrash /> */}
+                            </span>
+                        ))
+                    }
+
+                    {/* {
                         !hideInfo &&
                         <div className="notificationInfo">
                             <span onClick={() => setAlert(0)}>Eliminar alerta</span>
                         </div>
-                    }
+                    } */}
 
                 </div>
 
