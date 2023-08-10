@@ -22,6 +22,11 @@ const ChartStation = () => {
 
     const { angle, type } = useOrientation();
 
+    const [windowSize, setWindowSize] = useState([
+        window.innerWidth,
+        window.innerHeight,
+    ]);
+
     const cont = signal(0)
 
     // const { station } = useParams()
@@ -173,15 +178,26 @@ const ChartStation = () => {
     useEffect(() => {
         getStation()
         getAlerts(formatDate(new Date()))
-        document.addEventListener('visibilitychange', (e) => {
-            console.log(document.visibilityState)
-            if (document.visibilityState === 'visible') {
-                getLastInfo()
-                // window.alert('Bienvenido')
-                getRegistersRange(from, to)
-                getAlerts(formatDate(new Date()))
-            }
-        })
+        // document.addEventListener('visibilitychange', (e) => {
+        //     console.log(document.visibilityState)
+        //     if (document.visibilityState === 'visible') {
+        //         getLastInfo()
+        //         // window.alert('Bienvenido')
+        //         getRegistersRange(from, to)
+        //         getAlerts(formatDate(new Date()))
+        //     }
+        // })
+
+        const handleWindowResize = () => {
+            setWindowSize([window.innerWidth, window.innerHeight]);
+        };
+
+        window.addEventListener('resize', handleWindowResize);
+
+        return () => {
+            window.removeEventListener('resize', handleWindowResize);
+        };
+
     }, [])
 
     // useEffect(() => {
@@ -286,8 +302,9 @@ const ChartStation = () => {
                         // </CSVLink>
                     }
 
+                    {/* <h1 className='chartTitle'>{stationInfo?.alias}</h1> */}
+                    <h1 className='chartTitle'>{windowSize[0]}</h1>
 
-                    <h1 className='chartTitle'>{stationInfo?.alias}</h1>
 
                     <div className="navbar_header_right"
                     // onMouseLeave={() => setHideNotifications(false)}
@@ -383,7 +400,7 @@ const ChartStation = () => {
                         <span className='y_axisLabel'>cps</span>
 
                         <LineChart
-                            width={angle === 0 ? 300 : 700}
+                            width={windowSize[0] - 150}
                             height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }} >
                             <Line type="monotone" dataKey="data1"
                                 stroke={config.styles.linecolor}
@@ -406,7 +423,7 @@ const ChartStation = () => {
                         <h3>Tasa de dosis (µSv/h): </h3>
                         <span className='y_axisLabel'>µSv/h</span>
                         <LineChart
-                            width={angle === 0 ? 300 : 700}
+                            width={windowSize[0] - 150}
                             height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
                             <Line type="monotone" dataKey="data2"
                                 stroke={config.styles.linecolor}
@@ -429,7 +446,7 @@ const ChartStation = () => {
                         <h3>Tasa de dosis (µSv/d): </h3>
                         <span className='y_axisLabel'>µSv/d</span>
                         <LineChart
-                            width={angle === 0 ? 300 : 700}
+                            width={windowSize[0] - 150}
                             height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
                             <Line type="monotone" dataKey="data3"
                                 stroke={config.styles.linecolor}
