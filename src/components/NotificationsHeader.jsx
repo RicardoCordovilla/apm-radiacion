@@ -8,10 +8,9 @@ const NotificationsHeader = ({ notificationList, setAlert }) => {
 
     const alertMessage = [
         null,
-        'Alerta 1',
-        'Alerta 2',
-        'Alerta 3',
-        'Alerta 4',
+        'Rayos X dentales',
+        'Rayos X panoramicos',
+        'Tomografia computarizada',
     ]
 
 
