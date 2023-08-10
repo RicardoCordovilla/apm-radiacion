@@ -16,7 +16,7 @@ const NotificationsHeader = ({ notificationList, setAlert }) => {
 
     return (
         <div className='notificationsHeaderContainer'>
-            <h3>Notificaciones</h3>
+            <h3>Notificaciones...</h3>
             <div className="notificationsContainer">
 
                 <div className="notificationBx"
