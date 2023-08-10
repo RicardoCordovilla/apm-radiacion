@@ -25,7 +25,7 @@ const NotificationsHeader = ({ notificationList, setAlert }) => {
                     {
                         notificationList.map((notif, index) => (
                             <span key={index} className='notificationTitle'>
-                                {alertMessage[notif?.values?.alert]} | {notif?.time}
+                                {notif?.values?.alert ? alertMessage[notif?.values?.alert] : null} | {notif?.time}
                                 {/* <BiTrash /> */}
                             </span>
                         ))
