@@ -161,11 +161,11 @@ const ChartStation = () => {
     }
 
     const formatData = (data) => {
-        let dataformat = data?.map((reg, index) => ({ date: reg.date, time: reg.time, data1: reg.values.data1, data2: reg.values.data2, data3: reg.values.data3 }))
+        let dataformat = data?.map((reg, index) => ({ date: reg.date, time: reg.time, data1: reg.values?.data1, data2: reg.values?.data2, data3: reg.values?.data3 }))
         return dataformat
     }
     const formatCsv = (data) => {
-        let csvformat = data?.map((reg, index) => ({ device: station, fecha: reg.date, hora: reg.time, data1: reg.values.data1, data2: reg.values.data2, data3: reg.values.data3 }))
+        let csvformat = data?.map((reg, index) => ({ device: station, fecha: reg.date, hora: reg.time, data1: reg.values?.data1, data2: reg.values?.data2, data3: reg.values?.data3 }))
         return csvformat
     }
 
@@ -353,21 +353,21 @@ const ChartStation = () => {
 
                     <IndicatorCard
                         type={'cps'}
-                        value={itemInfo ? itemInfo?.values.data1 : 0}
+                        value={itemInfo ? itemInfo?.values?.data1 : 0}
                         status={1}
                         payload={payload}
                         stationInfo={stationInfo}
                     />
                     <IndicatorCard
                         type={'µSv/h'}
-                        value={itemInfo ? itemInfo?.values.data2 : 0}
+                        value={itemInfo ? itemInfo?.values?.data2 : 0}
                         status={1}
                         payload={payload}
                         stationInfo={stationInfo}
                     />
                     <IndicatorCard
                         type={'µSv/d'}
-                        value={itemInfo ? itemInfo?.values.data3 : 0}
+                        value={itemInfo ? itemInfo?.values?.data3 : 0}
                         status={1}
                         payload={payload}
                         stationInfo={stationInfo}
