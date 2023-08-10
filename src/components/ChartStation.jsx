@@ -302,8 +302,8 @@ const ChartStation = () => {
                         // </CSVLink>
                     }
 
-                    {/* <h1 className='chartTitle'>{stationInfo?.alias}</h1> */}
-                    <h1 className='chartTitle'>{windowSize[0]}</h1>
+                    <h1 className='chartTitle'>{stationInfo?.alias}</h1>
+                    {/* <h1 className='chartTitle'>{windowSize[0]}</h1> */}
 
 
                     <div className="navbar_header_right"
