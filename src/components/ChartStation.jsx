@@ -353,21 +353,21 @@ const ChartStation = () => {
 
                     <IndicatorCard
                         type={'cps'}
-                        value={itemInfo ? itemInfo?.values?.data1 : 0}
+                        value={itemInfo?.values ? itemInfo?.values?.data1 : 0}
                         status={1}
                         payload={payload}
                         stationInfo={stationInfo}
                     />
                     <IndicatorCard
                         type={'µSv/h'}
-                        value={itemInfo ? itemInfo?.values?.data2 : 0}
+                        value={itemInfo?.values ? itemInfo?.values?.data2 : 0}
                         status={1}
                         payload={payload}
                         stationInfo={stationInfo}
                     />
                     <IndicatorCard
                         type={'µSv/d'}
-                        value={itemInfo ? itemInfo?.values?.data3 : 0}
+                        value={itemInfo?.values ? itemInfo?.values?.data3 : 0}
                         status={1}
                         payload={payload}
                         stationInfo={stationInfo}
