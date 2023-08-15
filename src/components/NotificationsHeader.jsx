@@ -8,9 +8,9 @@ const NotificationsHeader = ({ notificationList, setAlert }) => {
 
     const alertMessage = [
         null,
-        'Rayos X dentales',
-        'Rayos X panoramicos',
-        'Tomografia computarizada',
+        'Límite de radiación alto',
+        'Tolerancia de radiación alta',
+        'Alerta de radiacion ionizante',
     ]
 
 

@@ -6,7 +6,7 @@ import Gauge from './Gauge';
 
 
 const IndicatorCard = ({ type, value, status, min, max, payload }) => {
-    console.log(min, max, value)
+    // console.log(min, max, value)
 
 
     useEffect(() => { }, [payload])

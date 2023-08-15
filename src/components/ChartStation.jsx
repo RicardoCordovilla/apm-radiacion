@@ -16,6 +16,7 @@ import { FaCircleRadiation } from 'react-icons/fa6'
 import NotificationsHeader from './NotificationsHeader'
 import { useOrientation } from 'react-use';
 import Notifier from "react-desktop-notifications"
+import { useSignal } from '@preact/signals-react'
 
 
 const ChartStation = () => {
@@ -27,11 +28,11 @@ const ChartStation = () => {
         window.innerHeight,
     ]);
 
-    const cont = signal(0)
+
 
     // const { station } = useParams()
     const station = 'RAD1'
-    console.log(station)
+    // console.log(station)
     const navigate = useNavigate()
 
 
@@ -58,9 +59,11 @@ const ChartStation = () => {
         color: "#212121"
     }
 
-    const [itemInfo, setItemInfo] = useState()
+    // const [itemInfo, setItemInfo] = useState()
+    const itemInfo = useSignal()
     const [stationInfo, setStationInfo] = useState()
-    const [registers, setRegisters] = useState()
+    // const [registers, setRegisters] = useState()
+    const registers = useSignal([])
     const [allRegisters, setAllRegisters] = useState([])
     const [csv, setCsv] = useState([])
     const [data, setData] = useState()
@@ -75,29 +78,30 @@ const ChartStation = () => {
 
     const [hideNotifications, setHideNotifications] = useState(false)
 
-    const [alert, setAlert] = useState(0)
+    // const [alert, setAlert] = useState(0)
+    const alert = useSignal()
 
     const getAlerts = (date) => {
         let url = config.db.baseurl + 'registers/' + station + '/date/alerts?'
             + 'from=' + date
             + '&to=' + date
-        console.log(url)
+        // console.log(url)
         axios.get(url)
             .then(response => {
-                console.log(response.data)
+                // console.log(response.data)
                 setNotificationList(response.data)
-                setAlert(response.data.length)
+                alert.value = response.data.length
             })
-            .catch(err => console.log(err))
+        // .catch(err => console.log(err))
     }
 
     const getLastInfo = () => {
         let url = config.db.baseurl + 'registers/' + station + '/last'
-        console.log(url)
+        // console.log(url)
         axios.get(url)
             .then(response => {
-                console.log(response.data)
-                setItemInfo(response.data)
+                // console.log(response.data)
+                itemInfo.value = response.data
             })
             .catch(err => console.log(err))
     }
@@ -105,50 +109,50 @@ const ChartStation = () => {
 
     const getStation = () => {
         let url = config.db.baseurl + 'stations/' + station
-        console.log(url)
+        // console.log(url)
         axios.get(url)
             .then(response => {
-                console.log(response.data)
+                // console.log(response.data)
                 setStationInfo(response.data)
-                console.log(stationInfo)
+                // console.log(stationInfo)
             })
-            .catch(err => console.log(err))
+        // .catch(err => console.log(err))
     }
 
 
     const getRegistersRange = (from, to) => {
-        console.log(from)
+        // console.log(from)
         let url = config.db.baseurl + 'registers/' + station + '/date?'
             + 'from=' + from
             + '&to=' + to
-        console.log(url)
+        // console.log(url)
         setFetching(true)
         axios.get(url)
             .then(response => {
-                console.log(response.data)
-                setRegisters(response.data)
+                // console.log(response.data)
+                registers.value = response.data
                 setRangeType(response.data[0].type)
-                console.log(response.data[0].type)
+                // console.log(response.data[0].type)
                 setFetching(false)
             })
-            .catch(err => console.log(err.data))
+        // .catch(err => console.log(err.data))
     }
 
     const getAllRegisters = () => {
         let url = config.db.baseurl + 'registers/' + station
-        console.log(url)
+        // console.log(url)
         setFetching(true)
         axios.get(url)
             .then(response => {
-                console.log(response.data)
+                // console.log(response.data)
                 setAllRegisters(response.data)
                 setFetching(false)
             })
-            .catch(err => console.log(err.data))
+        // .catch(err => console.log(err.data))
     }
 
     const handleFromTo = (e, type) => {
-        console.log(e, type)
+        // console.log(e, type)
         switch (type) {
             case 'from':
                 setFrom(e)
@@ -179,7 +183,7 @@ const ChartStation = () => {
         getStation()
         getAlerts(formatDate(new Date()))
         // document.addEventListener('visibilitychange', (e) => {
-        //     console.log(document.visibilityState)
+        // console.log(document.visibilityState)
         //     if (document.visibilityState === 'visible') {
         //         getLastInfo()
         //         // window.alert('Bienvenido')
@@ -201,25 +205,25 @@ const ChartStation = () => {
     }, [])
 
     // useEffect(() => {
-    //     console.log(type)
+    // console.log(type)
     // })
 
 
     useEffect(() => {
-        getRegistersRange(from, to)
-        getAlerts(formatDate(new Date()))
+        // getRegistersRange(from, to)
+        // getAlerts(formatDate(new Date()))
         getLastInfo()
     }, [payload])
 
     useEffect(() => {
-        console.log(from)
-        console.log(to)
+        // console.log(from)
+        // console.log(to)
         getRegistersRange(from, to)
     }, [from, to])
 
     useEffect(() => {
-        setData(formatData(registers))
-    }, [registers])
+        setData(formatData(registers.value))
+    }, [registers.value])
 
     useEffect(() => {
         setCsv(formatCsv(allRegisters))
@@ -237,24 +241,26 @@ const ChartStation = () => {
         if (payload.message
             // && [config.db.mqtt].includes(payload.topic)
         ) {
-            console.log(payload.topic)
+            // console.log(payload.topic)
             // const newMessage = JSON.parse(payload.message);
             // const newMessage = payload.message;
             // console.log(newMessage, stationInfo)
             if (payload.topic.split('/')[1] === 'all') {
-                getAlerts(formatDate(new Date()))
-                getRegistersRange(from, to)
+                // getAlerts(formatDate(new Date()))
+                // getRegistersRange(from, to)
+                getLastInfo()
             }
             if (payload.topic.split('/')[1] === 'alerts')
-                getLastInfo()
+                getAlerts(formatDate(new Date()))
+
         }
     }, [payload]);
 
 
     return (
         <div className='chartStationPage'
-            // onClick={() => setHideNotifications(false)}
-            onFocus={() => console.log('dasd')}
+        // onClick={() => setHideNotifications(false)}
+        // onFocus={() => console.log('dasd')}
         >
 
             {/* <SideNavBar /> */}
@@ -318,7 +324,7 @@ const ChartStation = () => {
                             <FaCircleRadiation fontSize={'3.5rem'}
                                 onClick={() => setHideNotifications(!hideNotifications)}
                             />
-                            {hideNotifications && <NotificationsHeader notificationList={notificationList} setAlert={setAlert} />}
+                            {hideNotifications && <NotificationsHeader notificationList={notificationList} setAlert={alert.value} />}
                         </div>
                     </div>
 
@@ -370,21 +376,21 @@ const ChartStation = () => {
 
                     <IndicatorCard
                         type={'cps'}
-                        value={itemInfo?.values ? itemInfo?.values?.data1 : 0}
+                        value={itemInfo.value?.values ? itemInfo.value?.values?.data1 : 0}
                         status={1}
                         payload={payload}
                         stationInfo={stationInfo}
                     />
                     <IndicatorCard
                         type={'µSv/h'}
-                        value={itemInfo?.values ? itemInfo?.values?.data2 : 0}
+                        value={itemInfo.value?.values ? itemInfo.value?.values?.data2 : 0}
                         status={1}
                         payload={payload}
                         stationInfo={stationInfo}
                     />
                     <IndicatorCard
                         type={'µSv/d'}
-                        value={itemInfo?.values ? itemInfo?.values?.data3 : 0}
+                        value={itemInfo.value?.values ? itemInfo.value?.values?.data3 : 0}
                         status={1}
                         payload={payload}
                         stationInfo={stationInfo}
@@ -410,10 +416,10 @@ const ChartStation = () => {
                             <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
                             <XAxis dataKey={rangeType === 'hour' ? 'time' : 'date'} />
                             <YAxis dataKey={"data1"} />
-                            <Tooltip animationDuration={200}
+                            {/* <Tooltip animationDuration={200}
                                 itemStyle={options}
                                 contentStyle={options}
-                            />
+                            /> */}
                         </LineChart>
 
                         <div className='x_axisLabel'>Hora</div>
@@ -433,10 +439,10 @@ const ChartStation = () => {
                             <CartesianGrid stroke="#ccc" strokeDasharray="10 10" />
                             <XAxis dataKey={rangeType === 'hour' ? 'time' : 'date'} />
                             <YAxis dataKey={"data2"} />
-                            <Tooltip animationDuration={200}
+                            {/* <Tooltip animationDuration={200}
                                 itemStyle={options}
                                 contentStyle={options}
-                            />
+                            /> */}
                         </LineChart>
                         <div className='x_axisLabel'>Hora</div>
 
@@ -456,10 +462,10 @@ const ChartStation = () => {
                             <CartesianGrid stroke="#ccc" strokeDasharray="10 10" />
                             <XAxis dataKey={rangeType === 'hour' ? 'time' : 'date'} />
                             <YAxis dataKey={"data3"} />
-                            <Tooltip animationDuration={200}
+                            {/* <Tooltip animationDuration={200}
                                 itemStyle={options}
                                 contentStyle={options}
-                            />
+                            /> */}
                         </LineChart>
                         <div className='x_axisLabel'>Hora</div>
                     </div>
