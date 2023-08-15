@@ -430,7 +430,9 @@ body {
   background-color: var(--chartbackcolor);
   padding: 0.8rem 1.5rem;
   /* margin: 1rem 0; */
-  width: 90%;
+  width: fit-content;
+  height: fit-content;
+  min-width: 90%;
   max-width: 250px;
   border-radius: 8px;
 }
@@ -446,7 +448,7 @@ body {
   /* font-family: 'VT323', monospace; */
   font-family: 'Electrolize', sans-serif;
   color: #d3d0d0;
-  font-size: 4rem;
+  font-size: 3rem;
   align-self: center;
   /* background-color: #1d508a; */
   line-height: 4rem;
